@@ -42,6 +42,9 @@ export default Ember.Component.extend({
                     moment(end, serverFormat).format(format);
             }
         }
+        if (this.get('singleDatePicker') && Ember.isPresent(start)) {
+            return moment(start, serverFormat).format(format);
+        }
         console.log(' chosen lable in rangeText CP ', chosenLabel);
         return chosenLabel;
     }),
