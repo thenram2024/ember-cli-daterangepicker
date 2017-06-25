@@ -93,6 +93,7 @@ export default Ember.Component.extend({
     isCustomDate: noop,
     chosenLabel: '',
     selectedOptionId: 0,
+    showDropDownLabel: true,
 
     didReceiveAttrs() {
         this._super(...arguments);
