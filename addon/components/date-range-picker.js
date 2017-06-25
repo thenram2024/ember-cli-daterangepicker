@@ -36,7 +36,7 @@ export default Ember.Component.extend({
         let end = this.get('end');
         let chosenLabel = this.get('chosenLabel');
         //TODO need to check with dateRanges in o365attributes for corresponding id for custom range.
-        if (Ember.isPresent(chosenLabel) && chosenLabel === 'Custom Range') {
+        if (this.get('singleDatePicker') === false && Ember.isPresent(chosenLabel) && chosenLabel === 'Custom Range') {
             if (!isEmpty(start) && !isEmpty(end)) {
                 return moment(start, serverFormat).format(format) + this.get('separator') +
                     moment(end, serverFormat).format(format);
@@ -78,7 +78,7 @@ export default Ember.Component.extend({
     cancelLabel: 'Cancel',
     applyLabel: 'Apply',
     customRangeLabel: 'Custom Range',
-    showCustomRangeLabel: false,
+    showCustomRangeLabel: true,
     fromLabel: 'From',
     toLabel: 'To',
     hideAction: null,
@@ -265,6 +265,9 @@ export default Ember.Component.extend({
             start = picker.startDate.format(this.get('serverFormat'));
             end = picker.endDate.format(this.get('serverFormat'));
             chosenLabel = picker.chosenLabel;
+            //console.log('daterangepicker start ', start, ' end ', end, ' picker.startDate ', picker.startDate, ' picker.endDate', picker.endDate);
+            this.set('start', picker.startDate);
+            this.set('end', picker.endDate);
             this.set('chosenLabel', chosenLabel);
         }
 
