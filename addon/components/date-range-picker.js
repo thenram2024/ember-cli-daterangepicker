@@ -111,7 +111,7 @@ export default Ember.Component.extend({
         //     }
         // }
         //calculate chosen label for the first time showing.
-        if (Ember.isPresent(this.get('start') && Ember.isPresent(this.get('end')))) {
+        if (Ember.isPresent(this.get('start')) && Ember.isPresent(this.get('end'))) {
             var customRange = true;
             var i = 0;
             let ranges = this.get('ranges');
@@ -277,7 +277,7 @@ export default Ember.Component.extend({
                 `${actionName} for date-range-picker must be a function`,
                 typeof action === 'function'
             );
-            this.sendAction(actionName, start, end, picker);
+            this.sendAction(actionName, start, end, chosenLabel, picker);
         } else {
             if (!this.isDestroyed) {
                 // console.log(' Date-Range-Picker ', { start, end, 'chosenLabel': chosenLabel });
