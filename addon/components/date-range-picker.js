@@ -56,6 +56,7 @@ export default Ember.Component.extend({
     buttonClasses: ['btn'],
     applyClass: null,
     cancelClass: null,
+    //currently ranges passed from external component itself.
     ranges: {
         'Today': [moment(), moment()],
         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -63,14 +64,6 @@ export default Ember.Component.extend({
         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
         'This Month': [moment().startOf('month'), moment().endOf('month')],
         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    },
-    rangesById: {
-        1: 'Today',
-        2: 'Yesterday',
-        3: 'Last 7 Days',
-        4: 'Last 30 Days',
-        5: 'This Month',
-        6: 'Last Month'
     },
     daysOfWeek: moment.weekdaysMin(),
     monthNames: moment.monthsShort(),
@@ -98,18 +91,6 @@ export default Ember.Component.extend({
     didReceiveAttrs() {
         this._super(...arguments);
         console.log(' daterange didReceiveAttrs Start ', this.get('start'), ' end ', this.get('end'), ' selectedOptionId ', this.get('selectedOptionId'));
-        // if (this.get('selectedOptionId')) {
-        //     let rangeName = this.get('rangesById')[this.get('selectedOptionId')];
-        //     this.set('start', this.get('ranges')[rangeName][0]);
-        //     this.set('end', this.get('ranges')[rangeName][1]);
-        // } else {
-        //     if (Ember.isPresent(this.get('start') && Ember.isPresent(this.get('end')))) {
-        //         this.set('start', moment(this.get('start')));
-        //         this.set('end', moment(this.get('end')));
-        //     } else if (Ember.isPresent(this.get('start'))) {
-        //         this.set('start', moment(this.get('start')));
-        //     }
-        // }
         //calculate chosen label for the first time showing.
         if (Ember.isPresent(this.get('start')) && Ember.isPresent(this.get('end'))) {
             var customRange = true;
