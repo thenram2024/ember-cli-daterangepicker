@@ -12,7 +12,7 @@ const noop = function() {};
 
 export default Ember.Component.extend({
     layout,
-    classNames: ['form-group'],
+    // classNames: ['form-group'],
     attributeBindings: ['start', 'end', 'serverFormat'],
     start: undefined,
     end: undefined,
