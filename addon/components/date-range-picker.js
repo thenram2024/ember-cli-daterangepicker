@@ -58,6 +58,7 @@ export default Ember.Component.extend({
     cancelClass: null,
     //currently ranges passed from external component itself.
     ranges: {
+        'All Time': ['', ''],
         'Today': [moment(), moment()],
         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
@@ -78,7 +79,7 @@ export default Ember.Component.extend({
     applyAction: null,
     cancelAction: null,
     autoUpdateInput: true,
-    autoApply: false,
+    autoApply: true,
     alwaysShowCalendars: false,
     context: undefined,
     firstDay: 0,
