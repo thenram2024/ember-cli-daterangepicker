@@ -91,27 +91,32 @@ export default Ember.Component.extend({
 
     didReceiveAttrs() {
         this._super(...arguments);
-        console.log(' daterange didReceiveAttrs Start ', this.get('start'), ' end ', this.get('end'), ' selectedOptionId ', this.get('selectedOptionId'));
+        //start can me valid moment object or moment with empty or with empty for initial time.
+        let start = this.get('start') || moment(this.get('start'));
+        let end = this.get('end') || moment(this.get('end'));
+        console.log(' daterange didReceiveAttrs Start ', start, ' end ', end, ' selectedOptionId ', this.get('selectedOptionId'));
         //calculate chosen label for the first time showing.
-        if (Ember.isPresent(this.get('start')) && Ember.isPresent(this.get('end'))) {
+        if (start.isValid() || end.isValid()) {
             var customRange = true;
             var i = 0;
             let ranges = this.get('ranges');
             for (var range in ranges) {
-                if (this.get('timePicker')) {
-                    if (this.get('start').isSame(ranges[range][0]) && this.get('end').isSame(ranges[range][1])) {
-                        customRange = false;
-                        // this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').html();
-                        this.set('chosenLabel', range);
-                        break;
-                    }
-                } else {
-                    //ignore times when comparing dates if time picker is not enabled
-                    if (this.get('start').format('YYYY-MM-DD') == ranges[range][0].format('YYYY-MM-DD') && this.get('end').format('YYYY-MM-DD') == ranges[range][1].format('YYYY-MM-DD')) {
-                        customRange = false;
-                        // this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').html();
-                        this.set('chosenLabel', range);
-                        break;
+                if (range !== "All Time") {
+                    if (this.get('timePicker')) {
+                        if (start.isSame(ranges[range][0]) && end.isSame(ranges[range][1])) {
+                            customRange = false;
+                            // this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').html();
+                            this.set('chosenLabel', range);
+                            break;
+                        }
+                    } else {
+                        //ignore times when comparing dates if time picker is not enabled
+                        if (start.format('YYYY-MM-DD') == ranges[range][0].format('YYYY-MM-DD') && end.format('YYYY-MM-DD') == ranges[range][1].format('YYYY-MM-DD')) {
+                            customRange = false;
+                            // this.chosenLabel = this.container.find('.ranges li:eq(' + i + ')').addClass('active').html();
+                            this.set('chosenLabel', range);
+                            break;
+                        }
                     }
                 }
                 i++;
@@ -125,8 +130,9 @@ export default Ember.Component.extend({
                     this.set('chosenLabel', '');
                 }
             }
+        } else if (!start.isValid() && !end.isValid()) {
+            this.set('chosenLabel', 'All Time');
         }
-
     },
     // Init the dropdown when the component is added to the DOM
     didInsertElement() {
