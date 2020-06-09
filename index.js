@@ -8,7 +8,7 @@ var fbTransform = require('fastboot-transform');
 
 
 module.exports = {
-    name: 'ember-cli-daterangepicker',
+    name: require('./package').name,
 
     included: function(app) {
         this._super.included.apply(this, arguments);
@@ -47,5 +47,5 @@ module.exports = {
     },
     isDevelopingAddon: function() {
         return true;
-    }
+    }  
 };
