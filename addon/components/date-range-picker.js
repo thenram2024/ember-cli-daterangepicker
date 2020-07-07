@@ -45,7 +45,7 @@ export default Ember.Component.extend({
         if (this.get('singleDatePicker') && Ember.isPresent(start)) {
             return moment(start, serverFormat).format(format);
         }
-        console.log(' chosen lable in rangeText CP ', chosenLabel);
+        //console.log(' chosen lable in rangeText CP ', chosenLabel);
         return chosenLabel;
     }),
     opens: null,
@@ -94,7 +94,7 @@ export default Ember.Component.extend({
         //start can me valid moment object or moment with empty or with empty for initial time.
         let start = this.get('start') || moment(this.get('start'));
         let end = this.get('end') || moment(this.get('end'));
-        console.log(' daterange didReceiveAttrs Start ', start, ' end ', end, ' selectedOptionId ', this.get('selectedOptionId'));
+        //console.log(' daterange didReceiveAttrs Start ', start, ' end ', end, ' selectedOptionId ', this.get('selectedOptionId'));
         //calculate chosen label for the first time showing.
         if (start.isValid() || end.isValid()) {
             var customRange = true;
