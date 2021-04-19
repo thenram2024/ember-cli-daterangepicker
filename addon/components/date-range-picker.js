@@ -5,7 +5,8 @@ import layout from '../templates/components/date-range-picker';
 const {
     run,
     isEmpty,
-    computed
+    computed,
+    isPresent
 } = Ember;
 
 const noop = function() {};
@@ -88,6 +89,7 @@ export default Ember.Component.extend({
     chosenLabel: '',
     selectedOptionId: 0,
     showDropDownLabel: true,
+    datePickerDropDownId:null,//A property to uniquely handle the daterangepicker dropdown element when using the addon in many place at a time(multi instance destroying issue).
 
     didReceiveAttrs() {
         this._super(...arguments);
@@ -153,7 +155,10 @@ export default Ember.Component.extend({
         run.cancel(this._setupTimer);
 
         if (this.get('removeDropdownOnDestroy')) {
-            Ember.$('.daterangepicker').remove();
+            if(isPresent(this.datePickerDropDownId))
+                $('#'+this.datePickerDropDownId).remove();
+            else
+                $('.daterangepicker').remove();
         }
     },
 
@@ -227,6 +232,14 @@ export default Ember.Component.extend({
 
     _setupPicker() {
         this.$('.daterangepicker-input').daterangepicker(this.getOptions());
+        if(isPresent(this.datePickerDropDownId)){
+            $('.daterangepicker').each((i,e)=>{
+                let elem=$(e);
+                if(!elem.is('[id]')){
+                    elem.attr('id',this.datePickerDropDownId);
+                }
+            });
+        }
         this.attachPickerEvents();
     },
 
