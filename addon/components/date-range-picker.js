@@ -89,6 +89,7 @@ export default Ember.Component.extend({
     chosenLabel: '',
     selectedOptionId: 0,
     showDropDownLabel: true,
+    datePickerDropDownId:null,
 	subLabel: "",
 	customClass: "",
 
