@@ -89,7 +89,8 @@ export default Ember.Component.extend({
     chosenLabel: '',
     selectedOptionId: 0,
     showDropDownLabel: true,
-    datePickerDropDownId:null,//A property to uniquely handle the daterangepicker dropdown element when using the addon in many place at a time(multi instance destroying issue).
+	subLabel: "",
+	customClass: "",
 
     didReceiveAttrs() {
         this._super(...arguments);
@@ -193,7 +194,9 @@ export default Ember.Component.extend({
             'showDropdowns',
             'linkedCalendars',
             'dateLimit',
-            'parentEl'
+            'parentEl',
+			'subLabel',
+			'customClass'
         );
 
         let localeOptions = this.getProperties(
