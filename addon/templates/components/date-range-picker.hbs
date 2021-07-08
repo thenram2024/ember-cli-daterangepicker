@@ -1,8 +1,17 @@
 {{#if showDropDownLabel}}
-<label>{{label}}</label>
+<label> {{preLabel}} {{label}}</label>
 {{/if}}
 {{!--<input type="text" value={{rangeText}} class="daterangepicker-input form-control" />--}}
-<span class="daterangepicker-input date-picker-cust">{{rangeText}}</span>
+<span class={{concat "daterangepicker-input date-picker-cust" " " customClass }}> 
+	{{#if subLabel}}
+		<span class="date-picker-cust-sublabel"> {{subLabel}} </span> 
+	{{/if}}
+	<span class="daterangepicker-input-label"> {{rangeText}} </span> 
+	{{#if subLabel}}
+		<span class="caret"></span>
+	{{/if}}
+</span>
+	
 {{!--<label>{{label}}</label>
 {{input value=rangeText class='daterangepicker-input form-control' placeholder=placeholder}}
 <div class="hide">
