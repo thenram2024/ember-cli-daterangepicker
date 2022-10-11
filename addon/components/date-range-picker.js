@@ -39,11 +39,24 @@ export default Ember.Component.extend({
         //TODO need to check with dateRanges in o365attributes for corresponding id for custom range.
         if (this.get('singleDatePicker') === false && Ember.isPresent(chosenLabel) && chosenLabel === 'Custom Range') {
             if (!isEmpty(start) && !isEmpty(end)) {
-                return moment(start, serverFormat).format(format) + this.get('separator') +
-                    moment(end, serverFormat).format(format);
+                if(moment.isMoment(start) && start._f === this.serverFormat){
+                    return start.format(format) + this.get('separator') + end.format(format);
+                }else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
+                    return start.utc().format(format) + this.get('separator') + end.utc().format(format);
+                }else {
+                    console.warn("UnSupported server format");
+                }
+                return moment(start, serverFormat).format(format) + this.get('separator') + moment(end, serverFormat).format(format);
             }
         }
         if (this.get('singleDatePicker') && Ember.isPresent(start)) {
+            if(moment.isMoment(start) && start._f === this.serverFormat){
+                return start.format(format);
+            }else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
+                return start.utc().format(format);
+            }else {
+                console.warn("UnSupported server format");
+            }
             return moment(start, serverFormat).format(format);
         }
         //console.log(' chosen lable in rangeText CP ', chosenLabel);
