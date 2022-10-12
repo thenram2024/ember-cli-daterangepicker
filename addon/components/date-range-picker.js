@@ -41,8 +41,18 @@ export default Ember.Component.extend({
             if (!isEmpty(start) && !isEmpty(end)) {
                 if(moment.isMoment(start) && start._f === this.serverFormat){
                     return start.format(format) + this.get('separator') + end.format(format);
-                }else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
-                    return start.utc().format(format) + this.get('separator') + end.utc().format(format);
+                }
+                // else if(moment.isMoment(start) && start._f === "YYYY-MM-DD HH:mm:ss"){
+                //     if(start.isUtc() === false)
+                //         return start.local().format(format) + this.get('separator') + end.local().format(format);
+                //     else
+                //     return start.format(format) + this.get('separator') + end.format(format);
+                // }
+                else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
+                    if(start._i.indexOf("+00:00") ==-1)
+                        return start.local().format(format) + this.get('separator') + end.local().format(format);
+                    else 
+                        return start.utc().format(format) + this.get('separator') + end.utc().format(format);
                 }else {
                     console.warn("UnSupported server format");
                 }
@@ -52,8 +62,18 @@ export default Ember.Component.extend({
         if (this.get('singleDatePicker') && Ember.isPresent(start)) {
             if(moment.isMoment(start) && start._f === this.serverFormat){
                 return start.format(format);
-            }else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
-                return start.utc().format(format);
+            }
+            // else if(moment.isMoment(start) && start._f === "YYYY-MM-DD HH:mm:ss"){
+            //     if(start.isUtc() === false)
+            //         return start.local().format(format);
+            //     else
+            //     return start.format(format);
+            // }
+            else if(moment.isMoment(start) && start._f === "YYYY-MM-DDTHH:mm:ss.SSSSZ"){
+                if(start._i.indexOf("+00:00") ==-1)
+                    return start.local().format(format);
+                else 
+                    return start.utc().format(format);
             }else {
                 console.warn("UnSupported server format");
             }
