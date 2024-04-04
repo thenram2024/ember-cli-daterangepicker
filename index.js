@@ -12,9 +12,11 @@ module.exports = {
 
     included: function(app) {
         this._super.included.apply(this, arguments);
-
-        this.app.import('vendor/bootstrap-daterangepicker/daterangepicker.js');
-        this.app.import('vendor/bootstrap-daterangepicker/daterangepicker.css');
+        this.app.import('vendor/moment.js');
+        this.app.import('vendor/daterangepicker.js');
+        this.app.import('vendor/daterangepicker.css');
+        // this.app.import('vendor/bootstrap-daterangepicker/daterangepicker.js');
+        // this.app.import('vendor/bootstrap-daterangepicker/daterangepicker.css');
     },
 
     treeForVendor: function(vendorTree) {
