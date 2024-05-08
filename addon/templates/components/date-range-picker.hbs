@@ -1,13 +1,13 @@
-{{#if showDropDownLabel}}
+{{#if this.showDropDownLabel}}
 <label> {{preLabel}} {{label}}</label>
 {{/if}}
 {{!--<input type="text" value={{rangeText}} class="daterangepicker-input form-control" />--}}
-<span class={{concat "daterangepicker-input date-picker-cust" " " customClass }}> 
-	{{#if subLabel}}
-		<span class="date-picker-cust-sublabel"> {{subLabel}} </span> 
+<span class={{concat "daterangepicker-input date-picker-cust" " " this.customClass }}> 
+	{{#if this.subLabel}}
+		<span class="date-picker-cust-sublabel"> {{this.subLabel}} </span> 
 	{{/if}}
-	<span class="daterangepicker-input-label"> {{rangeText}} </span> 
-	{{#if subLabel}}
+	<span class="daterangepicker-input-label"> {{this.rangeText}} </span> 
+	{{#if this.subLabel}}
 		<span class="caret"></span>
 	{{/if}}
 </span>
