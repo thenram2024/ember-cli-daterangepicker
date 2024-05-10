@@ -1,17 +1,13 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import moment from 'moment';
 import layout from '../templates/components/date-range-picker';
-
-const {
-    run,
-    isEmpty,
-    computed,
-    isPresent
-} = Ember;
-
+import { computed } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
+import { run } from '@ember/runloop';
+import { assert } from '@ember/debug';
 const noop = function() {};
 
-export default Ember.Component.extend({
+export default Component.extend({
     layout,
     // classNames: ['form-group'],
     attributeBindings: ['start', 'end', 'serverFormat'],
@@ -37,7 +33,7 @@ export default Ember.Component.extend({
         let end = this.get('end');
         let chosenLabel = this.get('chosenLabel');
         //TODO need to check with dateRanges in o365attributes for corresponding id for custom range.
-        if (this.get('singleDatePicker') === false && Ember.isPresent(chosenLabel) && chosenLabel === 'Custom Range') {
+        if (this.get('singleDatePicker') === false && isPresent(chosenLabel) && chosenLabel === 'Custom Range') {
             if (!isEmpty(start) && !isEmpty(end)) {
                 if(moment.isMoment(start) && start._f === this.serverFormat){
                     return start.format(format) + this.get('separator') + end.format(format);
@@ -59,7 +55,7 @@ export default Ember.Component.extend({
                 return moment(start, serverFormat).format(format) + this.get('separator') + moment(end, serverFormat).format(format);
             }
         }
-        if (this.get('singleDatePicker') && Ember.isPresent(start)) {
+        if (this.get('singleDatePicker') && isPresent(start)) {
             if(moment.isMoment(start) && start._f === this.serverFormat){
                 return start.format(format);
             }
@@ -311,7 +307,7 @@ export default Ember.Component.extend({
         }
 
         if (action) {
-            Ember.assert(
+            assert(
                 `${actionName} for date-range-picker must be a function`,
                 typeof action === 'function'
             );
