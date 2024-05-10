@@ -3,7 +3,7 @@ import moment from 'moment';
 import layout from '../templates/components/date-range-picker';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
-import { run } from '@ember/runloop';
+import { run,cancel,scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 const noop = function() {};
 
@@ -183,7 +183,7 @@ export default Component.extend({
     willDestroy() {
         this._super(...arguments);
 
-        run.cancel(this._setupTimer);
+        cancel(this._setupTimer);
 
         if (this.get('removeDropdownOnDestroy')) {
             if(isPresent(this.datePickerDropDownId))
@@ -259,8 +259,8 @@ export default Component.extend({
     },
 
     setupPicker() {
-        run.cancel(this._setupTimer);
-        this._setupTimer = run.scheduleOnce('afterRender', this, this._setupPicker);
+        cancel(this._setupTimer);
+        this._setupTimer = scheduleOnce('afterRender', this, this._setupPicker);
     },
 
     _setupPicker() {
