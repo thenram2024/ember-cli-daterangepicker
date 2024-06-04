@@ -296,22 +296,21 @@ export default Component.extend({
     attachPickerEvents() {
         let ele =this.element.querySelector('.daterangepicker-input');
         $(ele).on('apply.daterangepicker', (ev, picker) => {
-            this.handleDateRangePickerEvent('applyAction', picker);
+            this.handleDateRangePickerEvent(this.applyAction, picker);
         });
 
         $(ele).on('hide.daterangepicker', (ev, picker) => {
-            this.handleDateRangePickerEvent('hideAction', picker);
+            this.handleDateRangePickerEvent(this.hideAction, picker);
         });
 
         $(ele).on('cancel.daterangepicker', () => {
-            this.handleDateRangePickerEvent('cancelAction', undefined, true);
+            this.handleDateRangePickerEvent(this.cancelAction, undefined, true);
         });
 
     
     },
 
-    handleDateRangePickerEvent(actionName, picker, isCancel = false) {
-        let action = this.get(actionName);
+    handleDateRangePickerEvent(callBackAction, picker, isCancel = false) {
         let start;
         let end;
         let chosenLabel;
@@ -325,21 +324,16 @@ export default Component.extend({
             this.set('chosenLabel', chosenLabel);
         }
 
-        if (action) {
+        if (callBackAction) {
             assert(
                 `${actionName} for date-range-picker must be a function`,
-                typeof action === 'function'
+                typeof callBackAction === 'function'
             );
-            if(actionName=="applyAction"){
-             this.applyAction(start, end, chosenLabel, picker);
-            }
-            else if(actionName=="hideAction"){
-             this.hideAction(start, end, chosenLabel, picker);
-            }
-            else if(actionName=="cancelAction"){
-            this.cancelAction(start, end, chosenLabel, picker);
-            }
-        } else {
+          
+
+            callBackAction(start, end, chosenLabel, picker); 
+        } 
+        else {
             if (!this.isDestroyed) {
                 // console.log(' Date-Range-Picker ', { start, end, 'chosenLabel': chosenLabel });
                 this.setProperties({ start, end, 'chosenLabel': chosenLabel });
