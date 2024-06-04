@@ -280,7 +280,8 @@ export default Component.extend({
     },
 
     _setupPicker() {
-        this.$('.daterangepicker-input').daterangepicker(this.getOptions());
+          let ele =this.element.querySelector('.daterangepicker-input');
+          $(ele).daterangepicker(this.getOptions())
         if(isPresent(this.datePickerDropDownId)){
             $('.daterangepicker').each((i,e)=>{
                 let elem=$(e);
@@ -293,17 +294,20 @@ export default Component.extend({
     },
 
     attachPickerEvents() {
-        this.$('.daterangepicker-input').on('apply.daterangepicker', (ev, picker) => {
+        let ele =this.element.querySelector('.daterangepicker-input');
+        $(ele).on('apply.daterangepicker', (ev, picker) => {
             this.handleDateRangePickerEvent('applyAction', picker);
         });
 
-        this.$('.daterangepicker-input').on('hide.daterangepicker', (ev, picker) => {
+        $(ele).on('hide.daterangepicker', (ev, picker) => {
             this.handleDateRangePickerEvent('hideAction', picker);
         });
 
-        this.$('.daterangepicker-input').on('cancel.daterangepicker', () => {
+        $(ele).on('cancel.daterangepicker', () => {
             this.handleDateRangePickerEvent('cancelAction', undefined, true);
         });
+
+    
     },
 
     handleDateRangePickerEvent(actionName, picker, isCancel = false) {
@@ -326,7 +330,15 @@ export default Component.extend({
                 `${actionName} for date-range-picker must be a function`,
                 typeof action === 'function'
             );
-            this.sendAction(actionName, start, end, chosenLabel, picker);
+            if(actionName=="applyAction"){
+             this.applyAction(start, end, chosenLabel, picker);
+            }
+            else if(actionName=="hideAction"){
+             this.hideAction(start, end, chosenLabel, picker);
+            }
+            else if(actionName=="cancelAction"){
+            this.cancelAction(start, end, chosenLabel, picker);
+            }
         } else {
             if (!this.isDestroyed) {
                 // console.log(' Date-Range-Picker ', { start, end, 'chosenLabel': chosenLabel });
