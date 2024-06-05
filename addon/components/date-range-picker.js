@@ -280,7 +280,8 @@ export default Component.extend({
     },
 
     _setupPicker() {
-        this.$('.daterangepicker-input').daterangepicker(this.getOptions());
+          let ele =this.element.querySelector('.daterangepicker-input');
+          $(ele).daterangepicker(this.getOptions())
         if(isPresent(this.datePickerDropDownId)){
             $('.daterangepicker').each((i,e)=>{
                 let elem=$(e);
@@ -293,21 +294,23 @@ export default Component.extend({
     },
 
     attachPickerEvents() {
-        this.$('.daterangepicker-input').on('apply.daterangepicker', (ev, picker) => {
-            this.handleDateRangePickerEvent('applyAction', picker);
+        let ele =this.element.querySelector('.daterangepicker-input');
+        $(ele).on('apply.daterangepicker', (ev, picker) => {
+            this.handleDateRangePickerEvent(this.applyAction, picker);
         });
 
-        this.$('.daterangepicker-input').on('hide.daterangepicker', (ev, picker) => {
-            this.handleDateRangePickerEvent('hideAction', picker);
+        $(ele).on('hide.daterangepicker', (ev, picker) => {
+            this.handleDateRangePickerEvent(this.hideAction, picker);
         });
 
-        this.$('.daterangepicker-input').on('cancel.daterangepicker', () => {
-            this.handleDateRangePickerEvent('cancelAction', undefined, true);
+        $(ele).on('cancel.daterangepicker', () => {
+            this.handleDateRangePickerEvent(this.cancelAction, undefined, true);
         });
+
+    
     },
 
-    handleDateRangePickerEvent(actionName, picker, isCancel = false) {
-        let action = this.get(actionName);
+    handleDateRangePickerEvent(callBackAction, picker, isCancel = false) {
         let start;
         let end;
         let chosenLabel;
@@ -321,13 +324,16 @@ export default Component.extend({
             this.set('chosenLabel', chosenLabel);
         }
 
-        if (action) {
+        if (callBackAction) {
             assert(
                 `${actionName} for date-range-picker must be a function`,
-                typeof action === 'function'
+                typeof callBackAction === 'function'
             );
-            this.sendAction(actionName, start, end, chosenLabel, picker);
-        } else {
+          
+
+            callBackAction(start, end, chosenLabel, picker); 
+        } 
+        else {
             if (!this.isDestroyed) {
                 // console.log(' Date-Range-Picker ', { start, end, 'chosenLabel': chosenLabel });
                 this.setProperties({ start, end, 'chosenLabel': chosenLabel });
