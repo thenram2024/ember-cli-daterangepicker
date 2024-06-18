@@ -136,6 +136,7 @@
     width: 50px;
     margin-bottom: 0; }
   .daterangepicker .input-mini {
+    position: relative;
     border: 1px solid #ccc;
     border-radius: 4px;
     color: #555;
@@ -267,3 +268,24 @@
     float: right; }
   .daterangepicker .calendar.left {
     clear: none !important; } }
+
+/*Styles missed from bootstrap.css starts*/
+.table-condensed thead > tr > th, /*Brought the same style missed in bootstrap */
+.table-condensed tbody > tr > th,
+.table-condensed tfoot > tr > th,
+.table-condensed thead > tr > td,
+.table-condensed tbody > tr > td,
+.table-condensed tfoot > tr > td {
+  padding: 5px;
+}
+.prev.available , .next.available {
+  font-weight: bold;
+  color:rgba(0, 0, 0, 0.75);
+}
+.daterangepicker_input_icon {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+}
+
+/*Styles missed from bootstrap.css ends*/
