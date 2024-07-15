@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import moment from 'moment';
+// import moment from 'moment';     Remove for embroider use to get error.
 import layout from '../templates/components/date-range-picker';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
